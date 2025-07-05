@@ -9,14 +9,27 @@
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     :root {
+      --glow: #4e89ff;
+    }
+
+    html[data-theme="dark"] {
       --bg: #18191a;
       --sidebar-bg: #242526;
       --sidebar-border: #3a3b3c;
       --hover: #3a3b3c;
       --selected: #3e3f41;
-      --glow: #4e89ff;
       --text: #e4e6eb;
       --text-muted: #b0b3b8;
+    }
+
+    html[data-theme="light"] {
+      --bg: #f0f2f5;
+      --sidebar-bg: #ffffff;
+      --sidebar-border: #ddd;
+      --hover: #e4e6eb;
+      --selected: #dde3ee;
+      --text: #050505;
+      --text-muted: #606770;
     }
 
     * {
@@ -32,6 +45,7 @@
       display: flex;
       overflow: hidden;
       color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .sidebar {
@@ -42,6 +56,7 @@
       flex-direction: column;
       overflow-y: auto;
       box-shadow: 2px 0 4px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
     }
 
     .sidebar-header {
@@ -123,7 +138,7 @@
 <body>
 
   <div class="sidebar">
-    <div class="sidebar-header">💬 HackingGPT Tools</div>
+    <div class="sidebar-header">💬 kaliGPT Tools</div>
     <ul class="chat-links" id="chatList">
       <li class="selected" data-src="https://theee.ai/tools/i/🐉-Kali-GPT-2OToA2Jxrj"><i class="fas fa-dragon"></i> KaliGPT</li>
       <li data-src="https://theee.ai/tools/i/PentestGPT-ZxX35lx6"><i class="fas fa-bug"></i> PentestGPT</li>
@@ -160,8 +175,8 @@
 
     function toggleTheme() {
       const html = document.documentElement;
-      const isDark = html.getAttribute('data-theme') === 'dark';
-      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      const currentTheme = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
     }
   </script>
 
