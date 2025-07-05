@@ -1,26 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>kaliGPT</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>kaliGPT - Hacker Chat Tools</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    html, body {
+    :root {
+      --bg: #18191a;
+      --sidebar-bg: #242526;
+      --sidebar-border: #3a3b3c;
+      --hover: #3a3b3c;
+      --selected: #3e3f41;
+      --glow: #4e89ff;
+      --text: #e4e6eb;
+      --text-muted: #b0b3b8;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
     }
+
+    body {
+      background-color: var(--bg);
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+      color: var(--text);
+    }
+
+    .sidebar {
+      width: 270px;
+      background-color: var(--sidebar-bg);
+      border-right: 1px solid var(--sidebar-border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--sidebar-border);
+    }
+
+    .chat-links {
+      list-style: none;
+      flex-grow: 1;
+    }
+
+    .chat-links li {
+      padding: 14px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 15px;
+      transition: background 0.2s, color 0.2s;
+      position: relative;
+    }
+
+    .chat-links li:hover {
+      background-color: var(--hover);
+      color: var(--text);
+    }
+
+    .chat-links li.selected {
+      background-color: var(--selected);
+      color: var(--text);
+      border-left: 4px solid var(--glow);
+    }
+
+    .chat-links li i {
+      width: 20px;
+      text-align: center;
+      color: var(--glow);
+    }
+
+    .chat-area {
+      flex-grow: 1;
+      height: 100vh;
+    }
+
     iframe {
-      border: none;
       width: 100%;
       height: 100%;
+      border: none;
+    }
+
+    .theme-toggle {
+      padding: 14px 20px;
+      border-top: 1px solid var(--sidebar-border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      background-color: var(--sidebar-bg);
+      transition: background 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--hover);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #444;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <iframe src="https://theee.ai/tools/i/🐉-Kali-GPT-2OToA2Jxrj" allowfullscreen></iframe>
+
+  <div class="sidebar">
+    <div class="sidebar-header">💬 HackingGPT Tools</div>
+    <ul class="chat-links" id="chatList">
+      <li class="selected" data-src="https://theee.ai/tools/i/🐉-Kali-GPT-2OToA2Jxrj"><i class="fas fa-dragon"></i> KaliGPT</li>
+      <li data-src="https://theee.ai/tools/i/PentestGPT-ZxX35lx6"><i class="fas fa-bug"></i> PentestGPT</li>
+      <li data-src="https://theee.ai/tools/i/Bug-Hunter-GPT-ZxX4EzM1"><i class="fas fa-crosshairs"></i> Bug Hunter GPT</li>
+      <li data-src="https://theee.ai/tools/i/BugBountyGPT-8hxpbey"><i class="fas fa-coins"></i> BugBountyGPT</li>
+      <li data-src="https://theee.ai/tools/i/GPT-White-Hack-ZxX5N7QK"><i class="fas fa-user-secret"></i> GPT White Hack</li>
+      <li data-src="https://theee.ai/tools/i/Hacking-APIs-GPT-2OToA4baFe"><i class="fas fa-network-wired"></i> Hacking APIs GPT</li>
+      <li data-src="https://theee.ai/tools/i/h4ckGPT-ZxWyXddp"><i class="fas fa-mask"></i> h4ckGPT</li>
+      <li data-src="https://theee.ai/tools/i/HackingPT-ZxX4EiZU"><i class="fas fa-terminal"></i> HackingPT</li>
+      <li data-src="https://theee.ai/tools/i/HackerGPT-2OToJOVVty"><i class="fas fa-laptop-code"></i> HackerGPT</li>
+      <li data-src="https://theee.ai/tools/i/Pentest-GPT-2OToA4b1p1"><i class="fas fa-search"></i> Pentest GPT v2</li>
+      <li data-src="https://theee.ai/tools/i/GP-en-T-ester--8hxp3h6"><i class="fas fa-user-ninja"></i> GP-en-T-ester</li>
+      <li data-src="https://theee.ai/tools/i/BountyGPT-2OToA03AxT"><i class="fas fa-gem"></i> BountyGPT</li>
+    </ul>
+    <div class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</div>
+  </div>
+
+  <div class="chat-area">
+    <iframe id="chatFrame" src="https://theee.ai/tools/i/🐉-Kali-GPT-2OToA2Jxrj" allowfullscreen></iframe>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('#chatList li');
+    const iframe = document.getElementById('chatFrame');
+
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        const src = link.getAttribute('data-src');
+        iframe.setAttribute('src', src);
+        links.forEach(l => l.classList.remove('selected'));
+        link.classList.add('selected');
+      });
+    });
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    }
+  </script>
+
 </body>
 </html>
